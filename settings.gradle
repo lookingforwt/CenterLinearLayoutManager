@@ -1,0 +1,2 @@
+include ':sample', ':centerlinearlayoutmanager'
+rootProject.name='CenterLinearLayoutManager'
