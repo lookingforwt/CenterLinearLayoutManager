@@ -33,9 +33,9 @@ import android.view.animation.LinearInterpolator;
  * {@link #computeScrollVectorForPosition(int)} method. All the LayoutManagers bundled with
  * the support library implement this interface.
  */
-public class LinearSmoothScroller2 extends RecyclerView.SmoothScroller {
+public class CenterLinearSmoothScroller extends RecyclerView.SmoothScroller {
 
-    private static final String TAG = "LinearSmoothScroller2";
+    private static final String TAG = "CenterLinearSmoothScroller";
 
     private static final boolean DEBUG = false;
 
@@ -60,7 +60,7 @@ public class LinearSmoothScroller2 extends RecyclerView.SmoothScroller {
     // point to a real item position, rather point to an estimated location pixels.
     protected int mInterimTargetDx = 0, mInterimTargetDy = 0;
 
-    public LinearSmoothScroller2(Context context) {
+    public CenterLinearSmoothScroller(Context context) {
         MILLISECONDS_PER_PX = calculateSpeedPerPixel(context.getResources().getDisplayMetrics());
     }
 

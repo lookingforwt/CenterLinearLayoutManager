@@ -39,10 +39,10 @@ import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
  * A {@link RecyclerView.LayoutManager} implementation which provides
  * similar functionality to {@link android.widget.ListView}.
  */
-public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
+public class CenterLinearLayoutManager extends RecyclerView.LayoutManager implements
         ItemTouchHelper.ViewDropHandler, RecyclerView.SmoothScroller.ScrollVectorProvider {
 
-    private static final String TAG = "LinearLayoutManager2";
+    private static final String TAG = "CenterLinearLayoutManager";
 
     static final boolean DEBUG = false;
 
@@ -74,7 +74,7 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
 
     /**
      * Many calculations are made depending on orientation. To keep it clean, this interface
-     * helps {@link LinearLayoutManager2} make those decisions.
+     * helps {@link CenterLinearLayoutManager} make those decisions.
      */
     OrientationHelper mOrientationHelper;
 
@@ -144,11 +144,11 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
     private int mInitialPrefetchItemCount = 2;
 
     /**
-     * Creates a vertical LinearLayoutManager2
+     * Creates a vertical CenterLinearLayoutManager
      *
      * @param context Current context, will be used to access resources.
      */
-    public LinearLayoutManager2(Context context) {
+    public CenterLinearLayoutManager(Context context) {
         this(context, RecyclerView.DEFAULT_ORIENTATION, false);
     }
 
@@ -158,8 +158,8 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
      *                      #VERTICAL}.
      * @param reverseLayout When set to true, layouts from end to start.
      */
-    public LinearLayoutManager2(Context context, int orientation,
-                                boolean reverseLayout) {
+    public CenterLinearLayoutManager(Context context, int orientation,
+                                     boolean reverseLayout) {
         setOrientation(orientation);
         setReverseLayout(reverseLayout);
     }
@@ -172,8 +172,8 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
      * @attr ref androidx.recyclerview.R.styleable#RecyclerView_reverseLayout
      * @attr ref androidx.recyclerview.R.styleable#RecyclerView_stackFromEnd
      */
-    public LinearLayoutManager2(Context context, AttributeSet attrs, int defStyleAttr,
-                                int defStyleRes) {
+    public CenterLinearLayoutManager(Context context, AttributeSet attrs, int defStyleAttr,
+                                     int defStyleRes) {
         Properties properties = getProperties(context, attrs, defStyleAttr, defStyleRes);
         setOrientation(properties.orientation);
         setReverseLayout(properties.reverseLayout);
@@ -323,7 +323,7 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
     }
 
     /**
-     * Sets the orientation of the layout. {@link LinearLayoutManager2}
+     * Sets the orientation of the layout. {@link CenterLinearLayoutManager}
      * will do its best to keep scroll position.
      *
      * @param orientation {@link #HORIZONTAL} or {@link #VERTICAL}
@@ -415,13 +415,13 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
     /**
      * <p>Returns the amount of extra space that should be laid out by LayoutManager.</p>
      *
-     * <p>By default, {@link LinearLayoutManager2} lays out 1 extra page
+     * <p>By default, {@link CenterLinearLayoutManager} lays out 1 extra page
      * of items while smooth scrolling and 0 otherwise. You can override this method to implement
      * your custom layout pre-cache logic.</p>
      *
      * <p><strong>Note:</strong>Laying out invisible elements generally comes with significant
      * performance cost. It's typically only desirable in places like smooth scrolling to an unknown
-     * location, where 1) the extra content helps LinearLayoutManager2 know in advance when its
+     * location, where 1) the extra content helps CenterLinearLayoutManager know in advance when its
      * target is approaching, so it can decelerate early and smoothly and 2) while motion is
      * continuous.</p>
      *
@@ -443,10 +443,10 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
     @Override
     public void smoothScrollToPosition(RecyclerView recyclerView, RecyclerView.State state,
                                        int position) {
-        LinearSmoothScroller2 LinearSmoothScroller2 =
-                new LinearSmoothScroller2(recyclerView.getContext());
-        LinearSmoothScroller2.setTargetPosition(position);
-        startSmoothScroll(LinearSmoothScroller2);
+        CenterLinearSmoothScroller CenterLinearSmoothScroller =
+                new CenterLinearSmoothScroller(recyclerView.getContext());
+        CenterLinearSmoothScroller.setTargetPosition(position);
+        startSmoothScroll(CenterLinearSmoothScroller);
     }
 
     @Override
@@ -1303,7 +1303,7 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
      *
      * <p>For example, take a vertically scrolling RecyclerView with horizontally scrolling inner
      * RecyclerViews. The rows always have 4 items visible in them (or 5 if not aligned). Passing
-     * <code>4</code> to this method for each inner RecyclerView's LinearLayoutManager2 will enable
+     * <code>4</code> to this method for each inner RecyclerView's CenterLinearLayoutManager will enable
      * RecyclerView's prefetching feature to do create/bind work for 4 views within a row early,
      * before it is scrolled on screen, instead of just the default 2.</p>
      *
@@ -1508,7 +1508,7 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
      *                    parameter for now, rather than accessing {@link #mLayoutState}
      * @see #recycleViewsFromStart(RecyclerView.Recycler, int)
      * @see #recycleViewsFromEnd(RecyclerView.Recycler, int)
-     * @see LinearLayoutManager2.LayoutState#mLayoutDirection
+     * @see CenterLinearLayoutManager.LayoutState#mLayoutDirection
      */
     private void recycleByLayoutState(RecyclerView.Recycler recycler, LayoutState layoutState) {
         if (!layoutState.mRecycle || layoutState.mInfinite) {
@@ -1523,7 +1523,7 @@ public class LinearLayoutManager2 extends RecyclerView.LayoutManager implements
 
     /**
      * The magic functions :). Fills the given layout, defined by the layoutState. This is fairly
-     * independent from the rest of the {@link LinearLayoutManager2}
+     * independent from the rest of the {@link CenterLinearLayoutManager}
      * and with little change, can be made publicly available as a helper class.
      *
      * @param recycler        Current recycler that is attached to RecyclerView
